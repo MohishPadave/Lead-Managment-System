@@ -555,7 +555,7 @@ def get_users(current_user):
     return jsonify({'users': users_list}), 200
 
 # For Vercel serverless deployment
-handler = app
+# Vercel will use the 'app' variable directly
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
