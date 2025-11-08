@@ -15,13 +15,17 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key')
 
 # CORS configuration for production
 frontend_url = os.getenv('FRONTEND_URL', 'http://localhost:3000')
-CORS(app, resources={
-    r"/api/*": {
-        "origins": [frontend_url, "http://localhost:3000"],
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        "allow_headers": ["Content-Type", "Authorization"]
-    }
-})
+allowed_origins = [
+    frontend_url,
+    "http://localhost:3000",
+    "https://lead-managment-system-iota.vercel.app"  # Hardcoded as fallback
+]
+
+CORS(app, 
+     resources={r"/api/*": {"origins": allowed_origins}},
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+     allow_headers=["Content-Type", "Authorization"],
+     supports_credentials=True)
 
 # Mock user database
 USERS = [
